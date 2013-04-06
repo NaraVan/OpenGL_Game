@@ -10,6 +10,8 @@ static class TestMethods
 public:
 	bool testCameraControlMethods();
 	bool testMovingObjectMethods();
+private:
+	bool equals(CameraControl c1, CameraControl c2) const;
 
 };
 
