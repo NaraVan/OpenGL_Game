@@ -1,0 +1,10 @@
+- put bin files into the visual studio bin folder
+
+- put all the header files in the include folder into the visual studio include folder
+
+- the lib folder has 2 folders
+	- put the contents (not the folders themselves) of each folder into the visual studio lib folder. 
+
+- put the media folder in the visual studio VC folder
+
+- irrKlang.dll is in the bin\win32-visualstudio folder. Put this into the system32 folder
