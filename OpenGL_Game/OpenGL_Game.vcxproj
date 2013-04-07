@@ -16,6 +16,7 @@
     <ClCompile Include="Files\imageloader.cpp" />
     <ClCompile Include="Files\MovingObject.cpp" />
     <ClCompile Include="Files\vec3f.cpp" />
+    <ClCompile Include="TestMethods.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Files\CameraControl.h" />
@@ -24,6 +25,7 @@
     <ClInclude Include="Files\imageloader.h" />
     <ClInclude Include="Files\MovingObject.h" />
     <ClInclude Include="Files\vec3f.h" />
+    <ClInclude Include="TestMethods.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{79B9E715-4343-4D05-BF14-6F01BB116E97}</ProjectGuid>
