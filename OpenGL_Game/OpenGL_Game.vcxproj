@@ -15,6 +15,7 @@
     <ClCompile Include="Files\DisplayAxies.cpp" />
     <ClCompile Include="Files\imageloader.cpp" />
     <ClCompile Include="Files\MovingObject.cpp" />
+    <ClCompile Include="Files\TexturedSpheres.cpp" />
     <ClCompile Include="Files\vec3f.cpp" />
     <ClCompile Include="TestMethods.cpp" />
   </ItemGroup>

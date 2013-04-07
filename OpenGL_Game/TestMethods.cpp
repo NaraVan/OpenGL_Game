@@ -9,7 +9,27 @@ bool TestMethods::testCameraControlMethods(void)
 	testCam.dolly(-1);
 	if (! equals(testCam, ctrlCam))
 		return false;
+	
+	testCam.zoom(1);
+	testCam.zoom(-1);
+	if (! equals(testCam, ctrlCam))
+		return false;
+	
+	testCam.rotate(Vec3f(90,0,0));
+	testCam.rotate(Vec3f(90,0,0));
+	testCam.rotate(Vec3f(90,0,0));
+	testCam.rotate(Vec3f(90,0,0));
+	if (! equals(testCam, ctrlCam))
+		return false;
+
+	testCam.rotate(Vec3f(0,90,0));
+	testCam.rotate(Vec3f(0,90,0));
+	testCam.rotate(Vec3f(0,90,0));
+	testCam.rotate(Vec3f(0,90,0));
+	if (! equals(testCam, ctrlCam))
+		return false;
 	// TODO:
+	return true;
 
 }
 
@@ -18,6 +38,7 @@ bool TestMethods::testMovingObjectMethods(void)
 {
 	MovingObject testObject;
 	// TODO:
+	return true;
 }
 
 bool TestMethods::equals(CameraControl c1, CameraControl c2) const {

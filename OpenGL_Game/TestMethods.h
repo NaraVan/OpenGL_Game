@@ -5,7 +5,7 @@
 * This is a collection of static methods to test the assumptions of each class. It is currently a stub.
 */
 
-static class TestMethods
+class TestMethods
 {
 public:
 	bool testCameraControlMethods();
