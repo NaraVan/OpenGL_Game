@@ -16,6 +16,8 @@ local.properties
 .settings/
 .loadpath
 
+*.vcxproj
+*.vcxproj.filters
 # External tool builders
 .externalToolBuilders/
 
