@@ -60,4 +60,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\giraffe.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Files\leopard.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Files\zebra.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

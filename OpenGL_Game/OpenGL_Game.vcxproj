@@ -28,6 +28,11 @@
     <ClInclude Include="Files\vec3f.h" />
     <ClInclude Include="TestMethods.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Files\giraffe.bmp" />
+    <None Include="Files\leopard.bmp" />
+    <None Include="Files\zebra.bmp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{79B9E715-4343-4D05-BF14-6F01BB116E97}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
