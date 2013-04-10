@@ -15,54 +15,50 @@ Vec3f Vec3f::get() const // Method added by N. Van Rossum
 	return Vec3f(v[0], v[1], v[2]);
 }
 
-Vec3f Vec3f::rotation(Vec3f origin, Vec3f angles) const // Method added by N. Van Rossum
+Vec3f Vec3f::rotate(Vec3f origin, Vec3f angles) const // Method added by N. Van Rossum
 {
 	cout << ">>>rotation\n";
-	/* 
-	rotate z axis:
-	[1	0	0	 0]
-	[0	cos	-sin 0]
-	[0	sin	cos	 0]
-	[0	0	0	 1]
-
-	rotate y axis:
-	[cos  0	sin	0]
-	[0	  1	0	0]
-	[-sin 0	cos	0]
-	[0	  0	0	1]
-
-	rotate x axis:
-	[cos -sin 0	0]
-	[sin cos  0	0]
-	[0	 0	  1	0]
-	[0	 0	  0	1]
-	*/
-
+	
+	// rotate z axis:
+	// [1	0	0	 0]
+	// [0	cos	-sin 0]
+	// [0	sin	cos	 0]
+	// [0	0	0	 1]
 	Vec3f tempV = this->get();
 	if (angles[2] > 0.01f || angles[2] < -0.01f)
 	{
 		cout << "(Z rotation by " << angles[2] << ")\n"; 
-		float rads = (float)(2 * 3.14159 * angles[2] / 360.0f);
+		float rads = (float) (2 * 3.14159 * angles[2] / 360.0f);
 		float px = (float) (cos(rads) * (tempV[0]-origin[0]) - sin(rads) * (tempV[1]-origin[1]) + origin[0]);
 		float py = (float) (sin(rads) * (tempV[0]-origin[0]) + cos(rads) * (tempV[1]-origin[1]) + origin[1]);
 		tempV[0] = px;
 		tempV[1] = py;
 	}
 
+	// rotate y axis:
+	// [cos   0	 sin	0]
+	// [0	  1	 0		0]
+	// [-sin  0	 cos	0]
+	// [0	  0	 0		1]
 	if (angles[1] > 0.01f || angles[1] < -0.01f)
 	{
 		cout << "(Y rotation by " << angles[1] << ")\n"; 
-		float rads = (float)(2 * 3.14159 * angles[1] / 360.0f);
-		float px = (float)(cos(rads) * (tempV[0]-origin[0]) + sin(rads) * (tempV[2]-origin[2]) + origin[0]);
-		float pz = (float)(-sin(rads) * (tempV[0]-origin[0]) + cos(rads) * (tempV[2]-origin[2]) + origin[2]);
+		float rads = (float) (2 * 3.14159 * angles[1] / 360.0f);
+		float px = (float) (cos(rads) * (tempV[0]-origin[0]) + sin(rads) * (tempV[2]-origin[2]) + origin[0]);
+		float pz = (float) (-sin(rads) * (tempV[0]-origin[0]) + cos(rads) * (tempV[2]-origin[2]) + origin[2]);
 		tempV[0] = px;
 		tempV[2] = pz;
 	} 
 
+	// rotate x axis:
+	// [cos -sin 0	0]
+	// [sin cos  0	0]
+	// [0	 0	  1	0]
+	// [0	 0	  0	1]
 	if (angles[0] > 0.01f || angles[0] < -0.01f)
 	{
 		cout << "(X rotation by " << angles[0] << ")\n"; 
-		float rads = 2 * 3.14159 * angles[0] / 360.0f;
+		float rads = (float) (2 * 3.14159 * angles[0] / 360.0f);
 		float py = cos(rads) * (tempV[1]-origin[1]) - sin(rads) * (tempV[2]-origin[2]) + origin[1];
 		float pz = sin(rads) * (tempV[1]-origin[1]) + cos(rads) * (tempV[2]-origin[2]) + origin[2];
 		tempV[1] = py;

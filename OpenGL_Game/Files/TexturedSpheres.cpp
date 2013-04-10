@@ -5,7 +5,7 @@
 #include <GL/gl.h> // gl library
 #include <GL/glu.h> // glu library
 #include <GL/glut.h> // glut library
-
+/*
 GLuint texture; 
 GLuint texture1;
 GLuint texture2;
@@ -183,92 +183,49 @@ void ball() // Draw function
 
 
 void DrawBlur(int times, float inc)                 // Draw The Blurred Image
-
 {
-
     float spost = 0.0f;                     // Starting Texture Coordinate Offset
-
     float alphainc = 0.9f / times;                  // Fade Speed For Alpha Blending
-
     float alpha = 0.2f;                     // Starting Alpha Value
-
  
-
-    // Disable AutoTexture Coordinates
-
+   // Disable AutoTexture Coordinates
     glDisable(GL_TEXTURE_GEN_S);
-
     glDisable(GL_TEXTURE_GEN_T);
-
  
-
     glEnable(GL_TEXTURE_2D);                    // Enable 2D Texture Mapping
-
     glDisable(GL_DEPTH_TEST);                   // Disable Depth Testing
-
     glBlendFunc(GL_SRC_ALPHA,GL_ONE);               // Set Blending Mode
-
     glEnable(GL_BLEND);                     // Enable Blending
-
     glBindTexture(GL_TEXTURE_2D,BlurTexture);           // Bind To The Blur Texture
-
  
-
     alphainc = alpha / times;                   // alphainc=0.2f / Times To Render Blur 
 
-
-
     glBegin(GL_QUADS);                      // Begin Drawing Quads
-
         for (int num = 0;num < times;num++)          // Number Of Times To Render Blur
-
         {
-
             glColor4f(1.0f, 1.0f, 1.0f, alpha);     // Set The Alpha Value (Starts At 0.2)
-
             glTexCoord2f(0+spost,1-spost);          // Texture Coordinate   (   0,   1 )
-
             glVertex2f(0,0);                // First Vertex     (   0,   0 )
-
  
-
             glTexCoord2f(0+spost,0+spost);          // Texture Coordinate   (   0,   0 )
-
             glVertex2f(0,480);              // Second Vertex    (   0, 480 )
-
  
-
             glTexCoord2f(1-spost,0+spost);          // Texture Coordinate   (   1,   0 )
-
             glVertex2f(640,480);                // Third Vertex     ( 640, 480 )
-
  
-
             glTexCoord2f(1-spost,1-spost);          // Texture Coordinate   (   1,   1 )
-
             glVertex2f(640,0);              // Fourth Vertex    ( 640,   0 )
-
  
-
             spost += inc;                   // Gradually Increase spost (Zooming Closer To Texture Center)
-
             alpha = alpha - alphainc;           // Gradually Decrease alpha (Gradually Fading Image Out)
-
         }
-
     glEnd();                            // Done Drawing Quads
-
- 
-
  
  
 
     glEnable(GL_DEPTH_TEST);                    // Enable Depth Testing
-
     glDisable(GL_TEXTURE_2D);                   // Disable 2D Texture Mapping
-
     glDisable(GL_BLEND);                        // Disable Blending
-
     glBindTexture(GL_TEXTURE_2D,0);                 // Unbind The Blur Texture
 
 } 
@@ -333,3 +290,4 @@ int main(int argc, char **argv)
 	glutMainLoop();// loop
 	return 0;// return
 }
+*/

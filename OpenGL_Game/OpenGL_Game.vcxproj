@@ -11,20 +11,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Dragonfly.cpp" />
     <ClCompile Include="Files\CameraControl.cpp" />
     <ClCompile Include="Files\DisplayAxies.cpp" />
     <ClCompile Include="Files\imageloader.cpp" />
     <ClCompile Include="Files\MovingObject.cpp" />
+    <ClCompile Include="Files\objxload.cpp" />
     <ClCompile Include="Files\TexturedSpheres.cpp" />
     <ClCompile Include="Files\vec3f.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="TestMethods.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dragonfly.h" />
     <ClInclude Include="Files\CameraControl.h" />
     <ClInclude Include="Files\DisplayAxies.h" />
     <ClInclude Include="Files\DisplayObject.h" />
     <ClInclude Include="Files\imageloader.h" />
     <ClInclude Include="Files\MovingObject.h" />
+    <ClInclude Include="Files\objxload.h" />
     <ClInclude Include="Files\vec3f.h" />
     <ClInclude Include="TestMethods.h" />
   </ItemGroup>

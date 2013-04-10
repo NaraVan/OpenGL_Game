@@ -104,14 +104,14 @@ void CameraControl::circle(Vec3f angles)
 {
 	// Circles the target point. Changes location and upDirection.
 	// targetPoint is the axis of rotation
-	location = location.rotation(targetPoint, angles);
-	upDirection = upDirection.rotation(Vec3f(0,0,0), angles); // Up is a unit vector that rotates around the origin
+	location = location.rotate(targetPoint, angles);
+	upDirection = upDirection.rotate(Vec3f(0,0,0), angles); // Up is a unit vector that rotates around the origin
 } 
 
 void CameraControl::rotate(Vec3f angles)
 {
 	// location is the axis of rotation
-	targetPoint = targetPoint.rotation(location, angles);
-	upDirection = upDirection.rotation(Vec3f(0,0,0), angles); // Up is a unit vector that rotates around the origin
+	targetPoint = targetPoint.rotate(location, angles);
+	upDirection = upDirection.rotate(Vec3f(0,0,0), angles); // Up is a unit vector that rotates around the origin
 } 
 

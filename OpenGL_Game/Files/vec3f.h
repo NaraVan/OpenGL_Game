@@ -10,7 +10,7 @@ class Vec3f {
 		Vec3f();
 		Vec3f(float x, float y, float z);
 		Vec3f get() const; //<! Provides a deep copy. Method added by N. Van Rossum
-		Vec3f rotation(Vec3f origin, Vec3f angles) const; //<! Returns a rotated copy of the vector. Method added by N. Van Rossum
+		Vec3f rotate(Vec3f origin, Vec3f angles) const; //<! Returns a rotated copy of the vector. Method added by N. Van Rossum
 		float &operator[](int index);
 		float operator[](int index) const;
 		
