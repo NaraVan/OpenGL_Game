@@ -13,7 +13,7 @@ MovingObject::MovingObject(void)
 	movementFriction = Vec3f(0,0,0);
 	rotationFriction = Vec3f(0,0,0);
 
-	mass = 1;
+	mass = 1.0f;
 }
 
 MovingObject::~MovingObject(void)
@@ -45,6 +45,21 @@ Vec3f MovingObject::getOrbitPoint() const {
 	return orbitPoint.get();
 }
 
+Vec3f MovingObject::getDirectionFromRotation() const {
+	// If rotation is radians, and we need -1 to 1 for each axis
+	// The natural direction is 0,0,0 -> 0,0,1
+	// Each angle effects two directions
+	// Xangle -> Y Z
+	// Yangle -> X Z
+	// Zangle -> X Y
+
+	Vec3f temp = Vec3f();
+	temp[0] = cos(rotation[1]) + sin(rotation[1]) + cos(rotation[2]) - sin(rotation[2]);
+	temp[1] = cos(rotation[0]) - sin(rotation[0]) + sin(rotation[2]) + cos(rotation[2]);
+	temp[2] = sin(rotation[0]) + cos(rotation[0]) - sin(rotation[1]) + cos(rotation[1]);
+	std::cout << "[getDirectionFromRotation: "<< rotation << " to " << temp << "] ";
+	return temp.normalize();
+}
 
 void MovingObject::setLocation(Vec3f v_) {
 	location[0] = v_[0];
@@ -108,17 +123,17 @@ void MovingObject::update(void)
 	{
 	velocity += acceleration;
 	acceleration *= 0;
-	location += Vec3f( 
-		velocity[0] / (1 + movementFriction[0]), 
-		velocity[1] / (1 + movementFriction[1]), 
-		velocity[2] / (1 + movementFriction[2]));
+	location += velocity;
+	velocity[0] /= (1.0f + movementFriction[0]);
+	velocity[1] /= (1.0f + movementFriction[1]); 
+	velocity[2] /= (1.0f + movementFriction[2]);
 
 	rotationalVelocity += rotationalAcceleration;
 	rotationalAcceleration *= 0;
-	rotation += Vec3f(
-		rotationalVelocity[0] / (1 + rotationFriction[0]), 
-		rotationalVelocity[1] / (1 + rotationFriction[1]), 
-		rotationalVelocity[2] / (1 + rotationFriction[2]));
+	rotation += rotationalVelocity;
+	rotationalVelocity[0] /= (1.0f + rotationFriction[0]), 
+	rotationalVelocity[1] /= (1.0f + rotationFriction[1]), 
+	rotationalVelocity[2] /= (1.0f + rotationFriction[2]);
 	}
 }
 

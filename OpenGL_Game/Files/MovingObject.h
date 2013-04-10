@@ -17,6 +17,8 @@ public:
 	Vec3f getMovementFriction() const;
 	Vec3f getRotationFriction() const;
 
+	Vec3f getDirectionFromRotation() const;
+
 	Vec3f getOrbitPoint() const; // Not really being used yet.
 
 	void setLocation(Vec3f);

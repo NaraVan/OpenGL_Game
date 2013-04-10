@@ -30,7 +30,7 @@ Dragonfly::~Dragonfly(void)
 }
 
 void Dragonfly::render(){
-	std::cout << "*Rendering dragonfly*";
+	//std::cout << "*Rendering dragonfly*";
 	glPushMatrix();
 	// Start Standard MovingObject transformations
 	glTranslatef(location[0], location[1], location[2]);
@@ -108,8 +108,9 @@ void Dragonfly::render(){
 
 void Dragonfly::move(float amount) 
 {
-	addForce(rotation.get() * amount);
-	setMovementFriction(Vec3f(0.2,0.2,0.2));
+	// get direction from angle
+	addForce(getDirectionFromRotation() * amount);
+	setMovementFriction(Vec3f(0.5,0.5,0.5));
 }
 
 void Dragonfly::turn(Vec3f direction)
