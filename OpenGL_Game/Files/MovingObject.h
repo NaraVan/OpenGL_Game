@@ -10,7 +10,6 @@ public:
 	~MovingObject(void);
 
 	float getMass() const;
-	Vec3f getDirection() const;
 	Vec3f getLocation() const;
 	Vec3f getRotation() const;
 	Vec3f getVelocity() const;

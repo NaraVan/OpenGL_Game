@@ -1,6 +1,6 @@
 #pragma once
 #include "MovingObject.h"
-// Sandy was here
+
 /*!
 * A camera coordinate control class.
 * This allows for the camera's Eye, Look and Up vectors to be altered in ways that make sense. 

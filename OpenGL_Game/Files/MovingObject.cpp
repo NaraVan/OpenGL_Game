@@ -22,9 +22,6 @@ MovingObject::~MovingObject(void)
 
 float MovingObject::getMass() const { return mass; }
 
-Vec3f MovingObject::getDirection() const {
-	return velocity.normalize();
-}
 Vec3f MovingObject::getLocation() const {
 	return location.get();
 }
