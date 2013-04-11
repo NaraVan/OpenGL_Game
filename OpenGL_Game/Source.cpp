@@ -152,13 +152,13 @@ void keyPressed (unsigned char key, int x, int y)
 if (key == 's')
 {
 	//
-	dragonfly.move(0.01);
+	dragonfly.move(0.05);
 }
 
 if (key == 'w')
 {
 	//
-	dragonfly.move(-0.01);
+	dragonfly.move(-0.05);
 }
 
 if (key == 'a')
@@ -172,6 +172,12 @@ if (key == 'd')
 	//
 	dragonfly.turn(Vec3f(0,0.05f,0));
 }
+
+if(key == 'e')
+	dragonfly.changeAltitude(0.05);
+
+if(key == 'q')
+	dragonfly.changeAltitude(-0.05);
 
 if(key == 'f')
 {

@@ -33,6 +33,7 @@ public:
 	void render();
 	
 	void move(float amount); // moves forwards/backwards along vector created from current rotation
+	void changeAltitude(float);
 	void turn(Vec3f direction);
 	void animate();
 	

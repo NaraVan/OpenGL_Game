@@ -16,6 +16,8 @@ Dragonfly::Dragonfly(void)
 	frontWing = Wing();
 	backWing = Wing();
 
+	setFriction(0.005);
+
 	/*modelFile = "Resources/Crystal_8_Sides.obj";
 
     // Load model
@@ -145,13 +147,17 @@ void Dragonfly::move(float amount)
 {
 	// get direction from angle
 	addForce(getDirectionFromRotation() * amount);
-	setMovementFriction(Vec3f(0.01,0.01,0.01));
+}
+
+void Dragonfly::changeAltitude(float amount)
+{
+	addForce(Vec3f(0,amount,0));
 }
 
 void Dragonfly::turn(Vec3f direction)
 {
 	addRotationalForce(direction.get() * speed);
-	setRotationalFriction(Vec3f(0.01,0.01,0.01));
+	// TODO: tilt and readjust?
 }
 
 void Dragonfly::animate()
