@@ -13,6 +13,8 @@ Dragonfly::Dragonfly(void)
 
 	targetSpeed = maxSpeed;
 	tailRotation = 0;
+	frontWing = Wing();
+	backWing = Wing();
 
 	/*modelFile = "Resources/Crystal_8_Sides.obj";
 
@@ -49,34 +51,67 @@ void Dragonfly::render(){
 	
 	
 	glPushMatrix(); //- Head 
-	glTranslatef(0,0, -0.75);
+		glTranslatef(0,0, -0.75);
 
-	glPushMatrix();// Between eyes
-	glTranslatef(-1,0,0);
-	glRotatef(90,0,1,0);
-	gluCylinder(quadric, 0.3, 0.3, 2, resolution, resolution);
-	glPopMatrix();
+		glPushMatrix();// Between eyes
+			glTranslatef(-1,0,0);
+			glRotatef(90,0,1,0);
+			gluCylinder(quadric, 0.3, 0.3, 2, resolution, resolution);
+		glPopMatrix();
 
-	glPushMatrix(); // eye 
-	glTranslatef(-0.95,0,-0.05);
-	gluSphere(quadric,0.4, resolution, resolution);
-	glPopMatrix();
+		glPushMatrix(); // eye 
+			glTranslatef(-0.95,0,-0.05);
+			gluSphere(quadric,0.4, resolution, resolution);
+		glPopMatrix();
 	
-	glPushMatrix(); // eye
-	glTranslatef(0.95,0,-0.05);
-	gluSphere(quadric, 0.4, resolution, resolution);
-	glPopMatrix();
+		glPushMatrix(); // eye
+			glTranslatef(0.95,0,-0.05);
+			gluSphere(quadric, 0.4, resolution, resolution);
+		glPopMatrix();
 
-	glPushMatrix(); // mouth
-	glTranslatef(0,-0.25,-0.25);
-	gluSphere(quadric,0.25, resolution, resolution);
-	glPopMatrix();
-
-
+		glPushMatrix(); // mouth
+			glTranslatef(0,-0.25,-0.25);
+			gluSphere(quadric,0.25, resolution, resolution);
+		glPopMatrix();
 
 	glPopMatrix();//- Head
 
 	//- Body
+
+	// - Wings
+	glPushMatrix();
+		glTranslatef(0.35, 0.35,0);
+		//glRotatef(15, 0,1,0);
+
+		glPushMatrix();
+			frontWing.render();
+		glPopMatrix();
+	
+		glPushMatrix();
+			glTranslatef(0,0,0.5);
+			glRotatef(-20,0,1,0.5);
+			backWing.render();
+		glPopMatrix();
+
+	glPopMatrix();
+
+	// - Wings Mirrored
+	glPushMatrix();
+		glTranslatef(-0.35, 0.35,0);
+		glScalef(-1,1,1);
+
+		glPushMatrix();
+			frontWing.render();
+		glPopMatrix();
+	
+		glPushMatrix();
+			glTranslatef(0,0,0.5);
+			glRotatef(-20,0,1,0.5);
+			backWing.render();
+		glPopMatrix();
+
+	glPopMatrix();
+
 	//- Body Texture
 	//- Body Model
 	glPushMatrix();
@@ -119,51 +154,51 @@ void Dragonfly::turn(Vec3f direction)
 	setRotationalFriction(Vec3f(0.01,0.01,0.01));
 }
 
+void Dragonfly::animate()
+{
+	frontWing.animate();
+	backWing.animate();
+	update();
+}
 
+bool Dragonfly::withinRangeOfContact(Vec3f point) 
+{
+	bool temp = abs(point[0] - location[0]) <= 10 * scale; // Wing span
+	if (temp)
+		temp = abs(point[1] - location[1]) <= 5 * scale; // height
+	if (temp)
+		temp = abs(point[2] - (location[2] + 1.5 * scale) ) <= 5 * scale; // length
+	return temp;
+}
 
-/*float Dragonfly::getSpeed(){
-	return speed;
-}*/
-/*void Dragonfly::turn(float amount){
-	addRotationalForce(Vec3f(0,amount,0));
-	setRotationalFriction(Vec3f(0.5f,0.5f,0.5f));
-	velocity.rotate(Vec3f(0,0,0), Vec3f(0,amount,0));
-	//rotation.rotate(Vec3f(),Vec3f(0,amount,0));
-	//addRotationalForce(Vec3f(0,amount,0));
-	//addForce(rotation.get().normalize() * speed);
-	//setMovementFriction();
-	//setRotationalFriction(Vec3f(speed,speed,speed));
-} //!< Turn the creature. Expecting -360 to 360 ?*/
+bool Dragonfly::contactsWings(Vec3f point) 
+{
+	// TODO:
+	bool temp = abs(point[0] - location[0]) <= 10 * scale; // Wing span
+	if (temp) // True &&
+		temp = abs(point[2] - location[2]) <= 4 * scale; // Wing span
+	if (temp) // True &&
+		temp = abs(point[1] - location[1]) <= abs(point[0]); // [><] to make it like a bow tie
+	return temp;
+}// Checks if a point is within the wing flapping area
+bool Dragonfly::contactsMouth(Vec3f point)
+{
 
-/*void Dragonfly::accelerate(float amount){
-	speed += maxSpeed * amount;
-	if(speed >= maxSpeed)
-		speed = maxSpeed;
-	else if(speed <= - maxSpeed)
-		speed = - maxSpeed;
-	addForce()
-} //!< Speeds up the creature. Expecting 0 - 1, accelerates as a percentage of max speed
-
-void Dragonfly::applyBreaks(float amount){
-	if (amount < 0){
-		std::cout<<"[applyBreaks error: negative number]";
-		return;
-	} else if (amount > 1){
-		std::cout<<"[applyBreaks error: number larger than 1]";
-		return;
-	}
-	
-	speed -= speed * amount;
-
-	if(speed < 0.0001)
-		speed = 0;
-} //!< Slows down the creature. Expecting 0 - 1, applyBreaks(1.0f) = stops, also applies friction to the forces pushing against it?
-
-void Dragonfly::slowDownTo(float amount){
-	slowingDown = true;
-	targetSpeed = amount;
-} //!< Slows down over multiple renders. Sets slowingDown to true
-
-void Dragonfly::setMaxSpeed(float amount){
-	maxSpeed = amount;
-}*/
+	bool temp = abs(point[2] - (location[2] - 0.5 * scale)) <= 0.75 * scale;
+	if (temp) // True &&
+		temp = 
+			(point[0] - location[0])*(point[0] - location[0]) + 
+			(point[1] - location[1])*(point[1] - location[1]) - 
+			(scale * 0.5) * (scale * 0.5);
+	return temp;
+} // Checks if a point is in the rough area of the mouth
+bool Dragonfly::contactsBody(Vec3f point)
+{
+	bool temp = abs(point[2] - (location[2] + 1.5 * scale)) <= 5 * scale; // head is -1, tail ball is + 4, so to be within the center of the z of the body the location needs to be shifted
+	if (temp) // True &&
+		temp = 
+			(point[0] - location[0])*(point[0] - location[0]) + 
+			(point[1] - location[1])*(point[1] - location[1]) - 
+			(scale * 1.1) * (scale * 1.1); // 1.1 just to be on the safe side, check body in render func for more precision
+	return temp;
+} // Checks if the body is hit

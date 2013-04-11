@@ -54,9 +54,9 @@ Vec3f MovingObject::getDirectionFromRotation() const {
 	// Zangle -> X Y
 
 	Vec3f temp = Vec3f();
-	temp[0] = sin(abs(rotation[1]/180.0f * 3.14159265359f));//cos(rotation[1]) + sin(rotation[1]) + cos(rotation[2]) - sin(rotation[2]);
+	temp[0] = sin(rotation[1]/180.0f * 3.14159265359f);//cos(rotation[1]) + sin(rotation[1]) + cos(rotation[2]) - sin(rotation[2]);
 	temp[1] = 0;//sin(rotation[2]) + cos(rotation[2]) + cos(rotation[0]) - sin(rotation[0]);
-	temp[2] = cos(abs(rotation[1]/180.0f * 3.14159265359f));//cos(rotation[0]) + sin(rotation[0]) + cos(rotation[1]) - sin(rotation[1]);
+	temp[2] = cos(rotation[1]/180.0f * 3.14159265359f);//cos(rotation[0]) + sin(rotation[0]) + cos(rotation[1]) - sin(rotation[1]);
 	std::cout << "[getDirectionFromRotation: "<< rotation << " to " << temp << "] ";
 	return temp.normalize();
 }

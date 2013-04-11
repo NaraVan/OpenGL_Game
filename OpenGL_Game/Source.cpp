@@ -116,7 +116,7 @@ void draw() // Draw function
 }
 
 void animateObjects() {
-	dragonfly.update();
+	dragonfly.animate();
 }
 
 

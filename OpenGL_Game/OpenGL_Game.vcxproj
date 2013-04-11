@@ -21,6 +21,7 @@
     <ClCompile Include="Files\vec3f.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="TestMethods.cpp" />
+    <ClCompile Include="Wing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dragonfly.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="Files\objxload.h" />
     <ClInclude Include="Files\vec3f.h" />
     <ClInclude Include="TestMethods.h" />
+    <ClInclude Include="Wing.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Files\giraffe.bmp" />
