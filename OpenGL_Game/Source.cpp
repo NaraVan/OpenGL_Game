@@ -152,25 +152,25 @@ void keyPressed (unsigned char key, int x, int y)
 if (key == 's')
 {
 	//
-	dragonfly.move(0.5);
+	dragonfly.move(0.01);
 }
 
 if (key == 'w')
 {
 	//
-	dragonfly.move(-0.5);
+	dragonfly.move(-0.01);
 }
 
 if (key == 'a')
 {
 	//
-	dragonfly.turn(Vec3f(0,-0.5f,0));
+	dragonfly.turn(Vec3f(0,-0.05f,0));
 }
 
 if (key == 'd')
 {
 	//
-	dragonfly.turn(Vec3f(0,0.5f,0));
+	dragonfly.turn(Vec3f(0,0.05f,0));
 }
 
 if(key == 'f')

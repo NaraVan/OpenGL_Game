@@ -110,13 +110,13 @@ void Dragonfly::move(float amount)
 {
 	// get direction from angle
 	addForce(getDirectionFromRotation() * amount);
-	setMovementFriction(Vec3f(0.5,0.5,0.5));
+	setMovementFriction(Vec3f(0.01,0.01,0.01));
 }
 
 void Dragonfly::turn(Vec3f direction)
 {
-	addRotationalForce(direction.get().normalize() * speed);
-	setRotationalFriction(Vec3f(0.5,0.5,0.5));
+	addRotationalForce(direction.get() * speed);
+	setRotationalFriction(Vec3f(0.01,0.01,0.01));
 }
 
 
