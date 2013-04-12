@@ -10,7 +10,7 @@
 #include <string>
 #include "Dragonfly.h"
 #include "Files/CameraControl.h"
-#include <G:\My Documents\Visual Studio 2012\Projects\new_spheres\include\irrKlang.h>
+//#include <G:\My Documents\Visual Studio 2012\Projects\new_spheres\include\irrKlang.h>
 #if defined(WIN32)
 #include <conio.h>
 #else
@@ -18,9 +18,9 @@
 #endif
 #define PI 3.14159265
 
-#pragma comment(lib, "G:\\My Documents\\Visual Studio 2012\\Projects\\new_spheres\\lib\\Win32-visualStudio\\irrKlang.lib")
+//#pragma comment(lib, "G:\\My Documents\\Visual Studio 2012\\Projects\\new_spheres\\lib\\Win32-visualStudio\\irrKlang.lib")
 
-using namespace irrklang;
+//using namespace irrklang;
 
 float rotate_y=0;
 float rotate_x=0;
@@ -46,7 +46,7 @@ float z;
 
 float d;
 
-float musicPlaying; // 0 = overworld, 1 = space, 2 = city, 3 = jungle
+int musicPlaying; // 0 = overworld, 1 = space, 2 = city, 3 = jungle
 
 int play = 1;//flag for the animation
 
@@ -167,10 +167,10 @@ void camera (void) {
     glRotatef(yrot,0.0,1.0,0.0);  //rotate our camera on  y-axis
     glTranslated(-xpos,-ypos,-zpos); //translate the screen to the position of our camera
 }
-ISoundEngine* engine = createIrrKlangDevice();
+//ISoundEngine* engine = createIrrKlangDevice();
 void functionKeys (unsigned char key, int x, int y)
 {
-   switch (key)
+   /*switch (key)
    {
    case '1':
        engine->stopAllSounds();
@@ -217,7 +217,7 @@ case 's' :        // move back
 		 play = 1 - play;
 		 break;
       }
-
+	  */
        glutPostRedisplay();
 }
 
@@ -808,27 +808,56 @@ glutPostRedisplay();
    
     }
 
+	bool isInRange(float centerX_, float centerY_, float centerZ_, float radius_, float checkX_, float checkY_, float checkZ_)
+	{
+		return ((centerX_ - checkX_) * (centerX_ - checkX_) + (centerY_ - checkY_)*(centerY_ - checkY_) + (centerZ_ - checkZ_)*(centerZ_ - checkZ_) <= radius_ * radius_);
+	}
+
 	void idle(void){
-		/*/ update bug
-		engine->stopAllSounds();
+		// update bug
 
-		// check for bug
+		dragonfly.update();
+		Vec3f d_loc = dragonfly.getLocation();
+		int temp = musicPlaying;
+		// check for bug location
+		if (isInRange(0, 0, 0, 15, d_loc[0], d_loc[1], d_loc[2]))
+		{
+			musicPlaying = 1;
+		} else if (isInRange(20, 20, 20, 15, d_loc[0], d_loc[1], d_loc[2]))
+		{
+			musicPlaying = 2;
+		} else if (isInRange(-40, -40, -40, 15, d_loc[0], d_loc[1], d_loc[2]))
+		{
+			musicPlaying = 3;
+		} else 
+			musicPlaying = 0;
+
 		// choose music
-		switch(musicPlaying)
-	case '1':
-	engine->stopAllSounds();
-       engine->play2D("Cherry.ogg", true);
-       break;
+		if (temp != musicPlaying) // If there has been a change in location, then do the switch:
+		/*switch(musicPlaying){
+			case '0':
+				engine->stopAllSounds();
+				engine->play2D("outside.ogg", true);
+			   break;
+			case '1':
+				engine->stopAllSounds();
+			    engine->play2D("Cherry.ogg", true);
+			   break;
+		   case '2' :
+			   engine->stopAllSounds();
+			   engine->play2D("Vanished.ogg", true);
+				break;
+		   case '3':
+			   engine->stopAllSounds();
+			   engine->play2D("Wildcat.ogg", true);
+			   break;
+		}*/
 
-   case '2' :
-       engine->stopAllSounds();
-       engine->play2D("Vanished.ogg", true);
-        break;
-   case '3':
-	   engine->stopAllSounds();
-       engine->play2D("Wildcat.ogg", true);
 		// update spheres
-		// call display /*/
+
+		// call display //
+		display();
+		
 	}
    
    
@@ -852,7 +881,7 @@ glutPostRedisplay();
  
 		dragonfly = Dragonfly();//creates dragonfly
 
-      engine->play2D("outside.ogg", true);//plays the outside music
+      //engine->play2D("outside.ogg", true);//plays the outside music
   
     glutReshapeFunc(reshape); // Tell GLUT to use the method "reshape" for reshaping
     glutKeyboardFunc(functionKeys);

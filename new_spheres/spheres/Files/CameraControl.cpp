@@ -7,6 +7,7 @@ CameraControl::CameraControl(void)
 	location = Vec3f(0.0f, 0.0f, 1.0f);
 	targetPoint = Vec3f(0.0f, 0.0f, 0.0f);
 	upDirection = Vec3f(0.0f, 1.0f, 0.0f);
+	setFriction(0.005); // Setting some standard friction, may want to remove it later.
 }
 
 CameraControl::CameraControl(Vec3f location_, Vec3f targetPoint_, Vec3f upDirection_)
@@ -93,7 +94,7 @@ void CameraControl::zoom(float amount)
 	location += (targetPoint - location).normalize() * amount;
 }
 
-void CameraControl::pan(Vec3f panVector_)
+void CameraControl::pan(Vec3f panVector_) // To pan with an object, pan(newObjectLocation - targetPoint)
 {
 	// moves both the target and the location of the camera along a vector
 	location += panVector_;

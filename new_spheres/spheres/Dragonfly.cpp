@@ -145,8 +145,7 @@ void Dragonfly::render(){
 
 void Dragonfly::move(float amount) 
 {
-	// get direction from angle
-	addForce(getDirectionFromRotation() * amount);
+	speed = amount;
 }
 
 void Dragonfly::changeAltitude(float amount)
@@ -156,12 +155,14 @@ void Dragonfly::changeAltitude(float amount)
 
 void Dragonfly::turn(Vec3f direction)
 {
-	addRotationalForce(direction.get() * speed);
+	addRotationalForce(direction.get());
 	// TODO: tilt and readjust?
 }
 
 void Dragonfly::animate()
 {
+	addForce(getDirectionFromRotation() * speed);// get direction from angle
+	speed *= 0.5;
 	frontWing.animate();
 	backWing.animate();
 	update();
@@ -194,7 +195,7 @@ bool Dragonfly::contactsMouth(Vec3f point)
 	if (temp) // True &&
 		temp = 
 			(point[0] - location[0])*(point[0] - location[0]) + 
-			(point[1] - location[1])*(point[1] - location[1]) - 
+			(point[1] - location[1])*(point[1] - location[1]) <=
 			(scale * 0.5) * (scale * 0.5);
 	return temp;
 } // Checks if a point is in the rough area of the mouth
@@ -204,7 +205,7 @@ bool Dragonfly::contactsBody(Vec3f point)
 	if (temp) // True &&
 		temp = 
 			(point[0] - location[0])*(point[0] - location[0]) + 
-			(point[1] - location[1])*(point[1] - location[1]) - 
+			(point[1] - location[1])*(point[1] - location[1]) <= 
 			(scale * 1.1) * (scale * 1.1); // 1.1 just to be on the safe side, check body in render func for more precision
 	return temp;
 } // Checks if the body is hit
