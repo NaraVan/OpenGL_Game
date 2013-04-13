@@ -27,6 +27,7 @@ void Wing::render()
 	glRotatef(rotation[2],0,0,1);
 
 	glPushMatrix();
+	// wingTextureStart();
 	glBegin(GL_TRIANGLE_STRIP);    
 	glVertex3f( 0.0f, 0.0f, 0.0f ); //vertex 1
 	glVertex3f( 0.0f, 0.0f, -width * widthRatio); //vertex 2
@@ -38,6 +39,7 @@ void Wing::render()
 	glVertex3f( length - length * 0.1f, 0.0f, - width * widthRatio); //vertex 8
 	glVertex3f( length, 0.0f, 0.0f ); //vertex 9
 	glEnd();
+	//wingTextureEnd();
 	glPopMatrix();
 
 	glPopMatrix();

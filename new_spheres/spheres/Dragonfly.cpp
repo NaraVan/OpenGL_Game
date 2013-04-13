@@ -4,7 +4,7 @@
 
 Dragonfly::Dragonfly(void)
 {
-	speed = 1;
+	speed = 0;
 	maxSpeed = 1;
 	scale = 1;
 	slowingDown = false;

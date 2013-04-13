@@ -70,6 +70,12 @@ Vec3f Vec3f::rotate(Vec3f origin, Vec3f angles) const // Method added by N. Van 
 	cout << "<<<rotation";
 }
 
+float Vec3f::getAngle(Vec3f v1, Vec3f v2) const //!< Returns angle between two vectors. Added by N. Van Rossum
+{
+	return acos( v1.dot(v2) / (v1.magnitude() * v2.magnitude()));
+}
+
+
 Vec3f::Vec3f(float x, float y, float z) 
 {
 	v[0] = x;

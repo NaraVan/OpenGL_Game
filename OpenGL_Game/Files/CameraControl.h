@@ -14,10 +14,11 @@ class CameraControl: public MovingObject
 private:
 	Vec3f upDirection; //!< Up is a unit vector that rotates around the origin
 	Vec3f targetPoint; //!< TargetPoint is point towards which the camera is focused
-
+	float upRotation; //!< 
 public:
 	CameraControl(void);
 	CameraControl(Vec3f location_, Vec3f targetPoint_, Vec3f upDirection_);
+	//CameraControl(Vec3f location_, Vec3f targetPoint_, float upRotation_);
 	~CameraControl(void);
 	
 	// Accessor methods

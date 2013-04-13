@@ -8,13 +8,20 @@ CameraControl::CameraControl(void)
 	targetPoint = Vec3f(0.0f, 0.0f, 0.0f);
 	upDirection = Vec3f(0.0f, 1.0f, 0.0f);
 }
-
 CameraControl::CameraControl(Vec3f location_, Vec3f targetPoint_, Vec3f upDirection_)
 {
 	location = location_.get(); // get() returns a deep copy
 	targetPoint = targetPoint_.get();
 	upDirection = upDirection_.get();
 }
+
+/*CameraControl::CameraControl(Vec3f location_, Vec3f targetPoint_, float upRotation_)
+{
+	location = location_.get(); // get() returns a deep copy
+	targetPoint = targetPoint_.get();
+	Vec3f axis = (targetPoint - location).cross(Vec3f(0,1,0));
+	upDirection = ((targetPoint - location).normalize()).rotate(axis, Vec3f(90,0,0)); // Not tested
+}*/
 
 
 CameraControl::~CameraControl(void)

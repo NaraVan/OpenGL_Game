@@ -22,7 +22,11 @@ void CollisionSphere::setRadius(float r)
 }
 bool CollisionSphere::contains(Vec3f point)
 {
-	return ((point[0] - location[0]) * (point[0] - location[0]) + (point[1] - location[1]) * (point[1] - location[1]) + (point[2] - location[2]) * (point[2] - location[2]) <= radius * radius );
+	return (
+		((point[0] - location[0]) * (point[0] - location[0]) + 
+		(point[1] - location[1]) * (point[1] - location[1]) + 
+		(point[2] - location[2]) * (point[2] - location[2])) 
+		<= radius * radius );
 }
 Vec3f CollisionSphere::getPointOnSphereClosestTo(Vec3f point)
 {

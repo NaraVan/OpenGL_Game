@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CollisionSphere.cpp" />
     <ClCompile Include="Dragonfly.cpp" />
     <ClCompile Include="Files\CameraControl.cpp" />
     <ClCompile Include="Files\DisplayAxies.cpp" />
@@ -21,11 +20,11 @@
     <ClCompile Include="Files\TexturedSpheres.cpp" />
     <ClCompile Include="Files\vec3f.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Driver.cpp" />
     <ClCompile Include="TestMethods.cpp" />
     <ClCompile Include="Wing.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CollisionSphere.h" />
     <ClInclude Include="Dragonfly.h" />
     <ClInclude Include="Files\CameraControl.h" />
     <ClInclude Include="Files\DisplayAxies.h" />
