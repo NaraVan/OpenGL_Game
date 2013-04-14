@@ -16,6 +16,10 @@ public:
 	Vec3f getRotationalVelocity() const;
 	Vec3f getMovementFriction() const;
 	Vec3f getRotationFriction() const;
+	
+	Vec3f getOrbitalLocation() const;
+	Vec3f getOrbitalVelocity() const;
+	Vec3f getOrbitalFriction() const;
 
 	Vec3f getDirectionFromRotation() const;
 
@@ -54,7 +58,7 @@ protected:
 	Vec3f rotationalVelocity; //!< Rotation speed
 	Vec3f rotationalAcceleration; //!< Increase in rotation change
 	Vec3f orbitPoint; //!< Point around which the object orbits
-	//Vec3f orbitalLocation; //?
+	Vec3f orbitalLocation; //?
 	Vec3f orbitalVelocity; //!< Orbit speed
 	Vec3f orbitalAcceleration; //!< Orbit speed change
 	Vec3f orbitalFriction; //!< Resistance to orbit movement in 3d;

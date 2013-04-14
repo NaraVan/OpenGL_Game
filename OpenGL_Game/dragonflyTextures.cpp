@@ -7,45 +7,45 @@ dragonflyTextures::dragonflyTextures(void)
 	GLfloat norm = 50;
 	GLfloat shiny = 100;
 
-	headDf[0] = 0;	headDf[1] =.5;	headDf[2] = 1;	headDf[3] = 1;
-	headAm[0] = .5;	headAm[1] =.5;	headAm[2] =.5;	headAm[3] = 1;
+	headDf[0] =.5;	headDf[1] =.5;	headDf[2] =.5;	headDf[3] = 1;
 	headSp[0] = 1;	headSp[1] =.5;	headSp[2] = 0;	headSp[3] = 1;
-	headEm[0] = 0;	headEm[1] = 0;	headEm[2] = 0;	headEm[3] = 0;	
+	headAm[0] = 0;	headAm[1] = 0;	headAm[2] = 0;	headAm[3] = 1;
+	headEm[0] = 0;	headEm[1] = 0;	headEm[2] = 0;	headEm[3] = 1;	
 
 	headShininess = dull;
 
-	eyeDf[0] = 1;	eyeDf[1] = 0;	eyeDf[2] = 1;	eyeDf[3] = 1;
-	eyeAm[0] = 1;	eyeAm[1] = .5;	eyeAm[2] = 0;	eyeAm[3] = 1;
+	eyeDf[0] = 1;	eyeDf[1] =.5;	eyeDf[2] = 0;	eyeDf[3] = 1;
 	eyeSp[0] = 1;	eyeSp[1] = 1;	eyeSp[2] = 0;	eyeSp[3] = 1;
-	eyeEm[0] = 0;	eyeEm[1] = 0;	eyeEm[2] = 0;	eyeEm[3] = 0;
+	eyeAm[0] = 0;	eyeAm[1] = 0;	eyeAm[2] =.3;	eyeAm[3] = 1;
+	eyeEm[0] = 0;	eyeEm[1] = 0;	eyeEm[2] = 0;	eyeEm[3] = 1;
 	
 	eyeShininess = shiny;
 
-	mouthDf[0] =.2;	mouthDf[1] = 0;	mouthDf[2] = 0;	mouthDf[3] = 1;
-	mouthAm[0] =.5;	mouthAm[1] = 0;	mouthAm[2] = 0;	mouthAm[3] = 1;
+	mouthDf[0] =.5;	mouthDf[1] = 0;	mouthDf[2] = 0;	mouthDf[3] = 1;
 	mouthSp[0] = 1;	mouthSp[1] = 0;	mouthSp[2] = 0;	mouthSp[3] = 1;
-	mouthEm[0] = 0;	mouthEm[1] = 0;	mouthEm[2] = 0;	mouthEm[3] = 0;
+	mouthAm[0] = 0;	mouthAm[1] = 0;	mouthAm[2] = 0;	mouthAm[3] = 1;
+	mouthEm[0] = 0;	mouthEm[1] = 0;	mouthEm[2] = 0;	mouthEm[3] = 1;
 	
 	mouthShininess = norm;
 
 	wingDf[0] = 0;	wingDf[1] =.5;	wingDf[2] = 1;	wingDf[3] = 1;
-	wingAm[0] = .5;	wingAm[1] =.5;	wingAm[2] =.5;	wingAm[3] = 1;
 	wingSp[0] = 1;	wingSp[1] =.5;	wingSp[2] = 0;	wingSp[3] = 1;
-	wingEm[0] = 0;	wingEm[1] = 0;	wingEm[2] = 0;	wingEm[3] = 0;	
+	wingAm[0] = 0;	wingAm[1] = 0;	wingAm[2] = 0;	wingAm[3] = 1; // Best when dark
+	wingEm[0] = 0;	wingEm[1] = 0;	wingEm[2] = 0;	wingEm[3] = 1; //only for glowing things
 	
 	wingShininess = dull;
 
-	bodyDf[0] = 0;	bodyDf[1] =.5;	bodyDf[2] = 1;	bodyDf[3] = 1;
-	bodyAm[0] = .5;	bodyAm[1] =.5;	bodyAm[2] =.5;	bodyAm[3] = 1;
+	bodyDf[0] =.5;	bodyDf[1] =.5;	bodyDf[2] =.5;	bodyDf[3] = 1;
 	bodySp[0] = 1;	bodySp[1] =.5;	bodySp[2] = 0;	bodySp[3] = 1;
-	bodyEm[0] = 0;	bodyEm[1] = 0;	bodyEm[2] = 0;	bodyEm[3] = 0;	
+	bodyAm[0] = 0;	bodyAm[1] = 0;	bodyAm[2] = 0;	bodyAm[3] = 1;
+	bodyEm[0] = 0;	bodyEm[1] = 0;	bodyEm[2] = 0;	bodyEm[3] = 1;	
 	
 	bodyShininess = dull;
 
 	tailDf[0] = 0;	tailDf[1] = 1;	tailDf[2] = 0;	tailDf[3] = 1;
-	tailAm[0] = 0;	tailAm[1] = 1;	tailAm[2] =.5;	tailAm[3] = 1;
 	tailSp[0] = 0;	tailSp[1] = 1;	tailSp[2] = 1;	tailSp[3] = 1;
-	tailEm[0] = 0;	tailEm[1] = 0;	tailEm[2] = 0;	tailEm[3] = 0;	
+	tailAm[0] =.3;	tailAm[1] = 0;	tailAm[2] = 0;	tailAm[3] = 1;
+	tailEm[0] = 0;	tailEm[1] = 0;	tailEm[2] = 0;	tailEm[3] = 1;	
 	
 	tailShininess = shiny;
 

@@ -498,7 +498,7 @@ void functionKeys (unsigned char key, int x, int y)
 	   //dragonfly.addRotationalForce(Vec3f(0,5,0));
 	   dragonfly.addOrbitalForce(Vec3f(0,5,0));
 	   //if((dragonfly.getLocation() - dragonfly.getOrbitPoint()).magnitude() > 0.01){
-		   dragonfly.setRotation(Vec3f(0, 5, 0));
+	   dragonfly.addRotationalForce(Vec3f(0,5,0));
 	   //}
 	   //dragonfly.turn(Vec3f(0,1,0));
 	   break;
@@ -2305,7 +2305,7 @@ glPopMatrix();
     glViewport(0, 0, (GLsizei)width, (GLsizei)height); // Set our viewport to the size of our window
     glMatrixMode(GL_PROJECTION); // Switch to the projection matrix so that we can manipulate how our scene is viewed
     glLoadIdentity(); // Reset the projection matrix to the identity matrix so that we don't get any artifacts (cleaning up)
-    gluPerspective(60, (GLfloat)width / (GLfloat)height, 1.0, 8000.0); // Set the Field of view angle (in degrees), the aspect ratio of our window, and the new and far planes
+    gluPerspective(30, (GLfloat)width / (GLfloat)height, 1.0, 8000.0); // Set the Field of view angle (in degrees), the aspect ratio of our window, and the near and far planes
     glMatrixMode(GL_MODELVIEW); // Switch back to the model view matrix, so that we can start drawing shapes correctly
    
     }
@@ -2323,44 +2323,57 @@ glPopMatrix();
 
 		// update camera?
 		cam.setTarget(dragonfly.getLocation());
+		cam.setOrbitPoint(dragonfly.getLocation());
+		
+	  if((cam.getLocation())[1] <= 5)
+	  {
+		  cam.setLocation(Vec3f(cam.eyeX(), 5, cam.eyeZ()));
+	  }
 
 		Vec3f d_loc = dragonfly.getLocation();
 		int temp = musicPlaying;
 		// check for bug
 		if(isInRange(worldASX,worldASY,worldASZ,worldRadius,d_loc[0],d_loc[1],d_loc[2]))
 		{
+			std::cout<<"(Is in m1)";
 			musicPlaying = 1;
 		} else if(isInRange(worldPLX,worldPLY,worldPLZ,worldRadius,d_loc[0],d_loc[1],d_loc[2]))
 		{
+			std::cout<<"(Is in m2)";
 			musicPlaying = 2;
 		} else if(isInRange(worldWCX,worldWCY,worldWCZ,worldRadius,d_loc[0],d_loc[1],d_loc[2]))
 		{
+			std::cout<<"(Is in m3)";
 			musicPlaying = 3;
 		} else{
 			musicPlaying = 0;
 		}
 
 		// choose music
-		/*if (temp != musicPlaying)
+		if (temp != musicPlaying)
 			switch(musicPlaying){
 			   case '0':
+			std::cout<<"(Paying m0)";
 				   engine->stopAllSounds();
 				   engine->play2D("outdoors.ogg", true);
 				   break;
 				case '1':
+			std::cout<<"(Playing m1)";
 				engine->stopAllSounds();
 				   engine->play2D("Cherry.ogg", true);
 				   break;
 			   case '2' :
+			std::cout<<"(Playing m2)";
 				   engine->stopAllSounds();
 				   engine->play2D("Vanished.ogg", true);
 					break;
 			   case '3':
+			std::cout<<"(Playing m3)";
 				   engine->stopAllSounds();
 				   engine->play2D("Wildcat.ogg", true);
 				   break;
 			 
-			}*/
+			}
 			// update spheres
 			// call display //
 		
@@ -2402,9 +2415,10 @@ glPopMatrix();
     glEnable(GL_LIGHTING);
 
 	dragonfly = Dragonfly();//creates dragonfly
-	dragonfly.setLocation(Vec3f(0,10,0));
+	dragonfly.setLocation(Vec3f(0,15,0));
+	dragonfly.setOrbitPoint(Vec3f(0,15,0));
 	cam = CameraControl();
-	cam.setLocation(Vec3f(0,100,100));
+	cam.setLocation(Vec3f(0,500,500));
 	cam.setTarget(dragonfly.getLocation());
 
 	//engine->play2D("outside.ogg", true);//plays the outside music

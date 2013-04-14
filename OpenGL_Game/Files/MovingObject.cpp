@@ -47,6 +47,16 @@ Vec3f MovingObject::getOrbitPoint() const {
 	return orbitPoint.get();
 }
 
+Vec3f MovingObject::getOrbitalLocation() const{
+	return orbitalLocation.get();
+}
+Vec3f MovingObject::getOrbitalVelocity() const{
+	return orbitalVelocity.get();
+}
+Vec3f MovingObject::getOrbitalFriction() const{
+	return orbitalFriction.get();
+}
+
 Vec3f MovingObject::getDirectionFromRotation() const {
 	Vec3f temp = Vec3f();
 	//************** Using Quaternions?
@@ -152,6 +162,7 @@ void MovingObject::update(void)
 	
 	orbitalVelocity += orbitalAcceleration;
 	orbitalAcceleration *= 0;
+	orbitalLocation += orbitalVelocity;
 	location = location.rotate(orbitPoint, orbitalVelocity); // orbitalLocation?
 	orbitalVelocity[0] /= (1.0f + orbitalFriction[0]), 
 	orbitalVelocity[1] /= (1.0f + orbitalFriction[1]), 
