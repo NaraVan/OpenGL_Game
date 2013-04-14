@@ -3,6 +3,8 @@
 #include "files\MovingObject.h"
 #include "Files\objxload.h"
 #include "Wing.h"
+#include "dragonflyTextures.h"
+
 /*!
 * Moving bug class.
 * This dragonfly can be moved around and rendered.
@@ -26,6 +28,7 @@ private:
 	int resolution;
 	float tailRotation;
 	Wing frontWing, backWing; // to get the other side, reflect over the Z axis
+	dragonflyTextures tex;
 
 public:
 	Dragonfly(void);

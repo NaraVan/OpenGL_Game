@@ -51,6 +51,9 @@
     <ClCompile Include="Driver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dragonflyTextures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Files\CameraControl.h">
@@ -81,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Wing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dragonflyTextures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

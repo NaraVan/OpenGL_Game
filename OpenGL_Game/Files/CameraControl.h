@@ -14,7 +14,7 @@ class CameraControl: public MovingObject
 private:
 	Vec3f upDirection; //!< Up is a unit vector that rotates around the origin
 	Vec3f targetPoint; //!< TargetPoint is point towards which the camera is focused
-	float upRotation; //!< 
+	float upRotation; //!< I mostly kept Up == 0,1,0
 public:
 	CameraControl(void);
 	CameraControl(Vec3f location_, Vec3f targetPoint_, Vec3f upDirection_);
@@ -42,5 +42,7 @@ public:
 	void pan(Vec3f panDistance_); //!< Pans the camera. Changes location and targetPoint, but not targetVector or targetDistance.
 	void circle(Vec3f angles); //<! Camera circles the target point. Changes location and upDirection through rotation around the TargetPoint.
 	void rotate(Vec3f angles); //!< Camera rotates on itself. Changes upVector and targetPoint's location through rotation.
+
+	void animate();
 };
 

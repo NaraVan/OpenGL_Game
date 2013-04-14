@@ -4,9 +4,9 @@
 
 Dragonfly::Dragonfly(void)
 {
-	speed = 1;
+	speed = 0;
 	maxSpeed = 1;
-	scale = 1;
+	scale = 0.5;
 	slowingDown = false;
 	resolution = 24;
 	quadric = gluNewQuadric();
@@ -16,7 +16,9 @@ Dragonfly::Dragonfly(void)
 	frontWing = Wing();
 	backWing = Wing();
 
-	setFriction(0.005);
+	setFriction(0.1);
+
+	tex = dragonflyTextures();
 
 	/*modelFile = "Resources/Crystal_8_Sides.obj";
 
@@ -55,7 +57,7 @@ void Dragonfly::render(){
 	glPushMatrix(); //3- Head 
 		glTranslatef(0,0, -0.75);
 
-		// headTextureStart();
+		tex.headTextureStart();
 
 		glPushMatrix();// 4 Between eyes
 			glTranslatef(-1,0,0);
@@ -64,7 +66,7 @@ void Dragonfly::render(){
 		glPopMatrix();//4
 
 		// headTextureEnd();
-		// eyeTextureStart();
+		tex.eyeTextureStart();
 
 		glPushMatrix(); //4 eye 
 			glTranslatef(-0.95,0,-0.05);
@@ -77,7 +79,7 @@ void Dragonfly::render(){
 		glPopMatrix();//4
 
 		// eyeTextureEnd();
-		// mouthTextureStart();
+		tex.mouthTextureStart();
 
 		glPushMatrix(); //4 mouth
 			glTranslatef(0,-0.25,-0.25);
@@ -90,35 +92,34 @@ void Dragonfly::render(){
 
 	//- Body
 
-	// wingTexturStart();
+	tex.wingTexturStart();
 	glPushMatrix();//3
-		glTranslatef(0.35, 0.35,0);
-		//glRotatef(15, 0,1,0);
+		glTranslatef(0, 0.35,0);
 
 		glPushMatrix();//4
+			glTranslatef(0.35, 0, 0);
+			frontWing.render();
+		glPopMatrix();//4
+
+		glPushMatrix();//4
+			glTranslatef(-0.35, 0, 0);
+			glScalef(-1, 1, 1);
 			frontWing.render();
 		glPopMatrix();//4
 	
+
 		glPushMatrix();//4
-			glTranslatef(0,0,0.5);
-			glRotatef(-20,0,1,0.5);
+			glTranslatef(0.35, 0, 0.5);
+			glRotatef(-20, 0, 1, 0);
+			glRotatef(-10, 0, 0, 1);
 			backWing.render();
 		glPopMatrix();//4
 
-	glPopMatrix();//3
-
-	// - Wings Mirrored
-	glPushMatrix();//3
-		glTranslatef(-0.35, 0.35,0);
-		glScalef(-1,1,1);
-
 		glPushMatrix();//4
-			frontWing.render();
-		glPopMatrix();//4
-	
-		glPushMatrix();//4
-			glTranslatef(0,0,0.5);
-			glRotatef(-20,0,1,0.5);
+			glTranslatef(-0.35, 0, 0.5);
+			glScalef(-1, 1, 1);
+			glRotatef(-20, 0, 1, 0);
+			glRotatef(-10, 0, 0, 1);
 			backWing.render();
 		glPopMatrix();//4
 
@@ -126,7 +127,7 @@ void Dragonfly::render(){
 
 	//wingTextureEnd();
 
-	// bodyTextureStart();
+	tex.bodyTextureStart();
 	glPushMatrix();//3
 	//glTranslatef(0,0,0);
 	glScalef(0.75,0.7,1);
@@ -141,9 +142,10 @@ void Dragonfly::render(){
 	glTranslatef(0,0.1,0);
 	glRotatef(tailRotation, 0, 1, 0);
 	gluCylinder(quadric, 0.4, 0.1, 4, resolution, resolution);
+	
 	//-- TailBall
 	glPushMatrix();//4
-	//tailBallTextureStart();
+	tex.tailBallTextureStart();
 	glTranslatef(0, 0.1, 4 - 0.15);
 	gluSphere(quadric, 0.3, resolution, resolution);
 	//tailBallTextureEnd();
@@ -159,9 +161,12 @@ void Dragonfly::render(){
 
 void Dragonfly::move(float amount) 
 {
-	amount = abs(amount);
+
 	if (amount + speed > maxSpeed){
 		speed = maxSpeed;
+		return;
+	} else if (amount + speed <= 0.01){
+		speed = 0;
 		return;
 	}
 	speed += amount;

@@ -10,7 +10,7 @@
 #include <string>
 #include "Dragonfly.h"
 #include "Files/CameraControl.h"
-#include "C:/Users/Nara/Documents/GitHub/OpenGL_Game/OpenGL_Game/include/irrKlang.h"
+#include "include/irrKlang.h"
 #if defined(WIN32)
 	#include <conio.h>
 #else
@@ -18,7 +18,7 @@
 #endif
 #define PI 3.14159265
 
-#pragma comment(lib, "C:\\Users\\Nara\\Documents\\GitHub\\OpenGL_Game\\OpenGL_Game\\lib\\Win32-visualStudio\\irrKlang.lib")
+#pragma comment(lib, "lib\\Win32-visualStudio\\irrKlang.lib")
 
 using namespace irrklang;
 
@@ -368,11 +368,11 @@ void wsView()
         glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);//shaded mode
 }
 
-void camera (void) {
+/*void camera (void) {
     glRotatef(xrot,1.0,0.0,0.0);  //rotate world on  x-axis
     glRotatef(yrot,0.0,1.0,0.0);  //rotate world on  y-axis
     glTranslated(-xpos,-ypos,-zpos); //translate world to position
-}
+}*/
 
 void functionKeys (unsigned char key, int x, int y)
 {
@@ -391,14 +391,35 @@ void functionKeys (unsigned char key, int x, int y)
 	   engine->stopAllSounds();
        engine->play2D("Wildcat.ogg", true);
         break;
+	  
    case 'q'://press q to toggle wireframe on/off
-       wsType = 1 - wsType;
+      wsType = 1 - wsType;
       break;
 
-case 's' :  
-	
-		cam.dolly(30.0f);
-	/*/ move back
+    case 'w' :
+			cam.circle(Vec3f(-1.0f,0,0));
+		
+		if(cam.getLocation()[1] < 10)
+			cam.circle(Vec3f(1.0f,0,0));
+		if(cam.getLocation()[1] < 5)
+			cam.orbitBounce(Vec3f(0,1,0));
+		/*//move forward
+        yrotrad = (yrot / 180 * 3.141592654f);
+        xrotrad = (xrot / 180 * 3.141592654f);
+        xpos += float(sin(yrotrad)) ;
+        zpos -= float(cos(yrotrad)) ;
+        ypos -= float(sin(xrotrad)) ;*/
+    break;
+	case 's' :  
+		//if(cam.getLocation()[1] > 1) // && cam.getLocation().dot(Vec3f(cam.targetX(),cam.targetY(), cam.targetZ())) > 0.01 )
+			cam.circle(Vec3f(1.0f,0,0));
+		
+		if(cam.getLocation()[1] < 10)
+			cam.circle(Vec3f(-1.0f,0,0));
+		if(cam.getLocation()[1] < 5)
+			cam.orbitBounce(Vec3f(0,1,0));
+
+	/*// move back
     float xrotrad, yrotrad; // x and y rotation radian
     yrotrad = (yrot / 180 * 3.141592654f);
     xrotrad = (xrot / 180 * 3.141592654f);
@@ -407,95 +428,117 @@ case 's' :
     ypos += float(sin(xrotrad));*/
     break;
 
-    case 'w' :
-		cam.dolly(-30.0f);
-		/*/move forward
-        yrotrad = (yrot / 180 * 3.141592654f);
-        xrotrad = (xrot / 180 * 3.141592654f);
-        xpos += float(sin(yrotrad)) ;
-        zpos -= float(cos(yrotrad)) ;
-        ypos -= float(sin(xrotrad)) ;*/
-    break;
     case 'a' : 
-		cam.circle(Vec3f(0,-30.0f,0));
-		/*/look left
+		cam.circle(Vec3f(0,-1.0f,0));
+		/*//look left
              yrot -= 10;
             if (yrot < -360)yrot += 360;*/
-                break;
+        break;
      case 'd' : 
-		cam.circle(Vec3f(0,30.0f,0));
-		 /*/ look right
+		cam.circle(Vec3f(0,1.0f,0));
+		 /*// look right
             yrot += 10;
             if (yrot >360) yrot -= 360;*/
-                break;
-	 case 'z': //turn on/off animation
+         break;
+	 case'z':
+		cam.dolly(-10.0f);
+		 break;
+	 case 'x':
+		cam.dolly(10.0f);
+		 break;
+	 case 't': //turn on/off animation
 		 play = 1 - play;
 		 break;
 	case 'f':
 		fog=! fog;
-		if (fog)
-		   {
-			   fog = true;
-		   }
-		   else
-		   {
-			   fog = false;
-		   }
+		if (fog) {
+			fog = true;
+		} else {
+			fog = false;
+		}
 		break;
 	case 'c':
 	   cyan=! cyan;
-	   if (cyan)
-	   {
+	   if (cyan) {
 		   cyan = true;
-	   }
-	   else
-	   {
+	   } else {
 		   cyan = false;
 	   }
 	   break;
    case 'g':
 	   green=! green;
-	   if (green){
+	   if (green) {
 		   green = true;
-	   }
-	   else
-	   {
+	   } else {
 		   green = false;
 	   }
+
+   case 'i':
+	   //dragonfly.changeAltitude(1);
+	   if (dragonfly.getLocation()[1] > 100)
+		   dragonfly.velocityBounce(Vec3f(0,1.0f,0));
+	   else
+		   dragonfly.addForce(Vec3f(0,1.0f,0));
+	   break;
+   case 'k':
+	   //dragonfly.changeAltitude(-1);
+	   if (dragonfly.getLocation()[1] < 5)
+		   dragonfly.velocityBounce(Vec3f(0,1.0f,0));
+	   else
+		   dragonfly.addForce(Vec3f(0,-1.0f,0));
+	   break;
+   case 'j':
+	   //dragonfly.addRotationalForce(Vec3f(0,-5,0));
+	   dragonfly.addOrbitalForce(Vec3f(0,-5,0));
+		   dragonfly.setRotation(Vec3f(0, -5, 0));
+
+	   //dragonfly.turn(Vec3f(0,-1,0));
+	   break;
+   case 'l':
+	   //dragonfly.addRotationalForce(Vec3f(0,5,0));
+	   dragonfly.addOrbitalForce(Vec3f(0,5,0));
+	   //if((dragonfly.getLocation() - dragonfly.getOrbitPoint()).magnitude() > 0.01){
+		   dragonfly.setRotation(Vec3f(0, 5, 0));
+	   //}
+	   //dragonfly.turn(Vec3f(0,1,0));
+	   break;
+   case 'u':
+	   dragonfly.addForce(-dragonfly.getDirectionFromRotation());
+	   //dragonfly.move(-0.01);
+	   break;
+   case 'o':
+	   dragonfly.addForce(dragonfly.getDirectionFromRotation());
+	   //dragonfly.move(0.01);
+	   break;
+
+   case 27:
+	   exit(0);
 				   
       }
-
        //glutPostRedisplay(); // Idle function replaces this
 }
 
   void specialKeys( int key, int x, int y ) {
  
 //  Right arrow - increase rotation by 5 degree
-if (key == GLUT_KEY_RIGHT){
-	dragonfly.turn(Vec3f(0,-10,0));
- /* rotate_y += 5;
+/*if (key == GLUT_KEY_RIGHT){
+  rotate_y += 5;
   yrot += 1;
 if (yrot >360) yrot -= 360;
  */
 //  Left arrow - decrease rotation by 5 degree
-}else if (key == GLUT_KEY_LEFT){
-	dragonfly.turn(Vec3f(0,10,0));
-  /*rotate_y -= 5;
+/*}else if (key == GLUT_KEY_LEFT){
+  rotate_y -= 5;
             yrot -= 1;
     if (yrot < -360)yrot += 360;
  */
-}else if (key == GLUT_KEY_UP){
-	//dragonfly.move(0.1);
-dragonfly.changeAltitude(0.5);
+ /*}else if (key == GLUT_KEY_UP){
   //rotate_x += 5;
- /*xrot -= 5;
+xrot -= 5;
             if (xrot < -360) xrot += 360;*/
  
-} else if (key == GLUT_KEY_DOWN)
-	//dragonfly.move(-0.1);
-if(dragonfly.getLocation()[1] > 10)
-	dragonfly.changeAltitude(-0.5);
- /* //rotate_x -= 5;
+ /* } else if (key == GLUT_KEY_DOWN)
+//rotate_x -= 5;
   xrot += 5;
             if (xrot >360) xrot -= 360;
  */
@@ -504,7 +547,7 @@ if(dragonfly.getLocation()[1] > 10)
  
 }
 
-void renderSpheres (void) {
+void display (void) {
 	
 	glEnable(GL_NORMALIZE);
 	gluQuadricTexture(zeb_quad, GL_TRUE); //bind the quad zebra textures
@@ -536,7 +579,7 @@ void renderSpheres (void) {
     
       //camera();
 	  gluLookAt(cam.eyeX(), cam.eyeY(),cam.eyeZ(),cam.targetX(),cam.targetY(), cam.targetZ(),cam.upX(),cam.upY(),cam.upZ() );//20, 20, 50,0,0,1,0.0f, 1.0f, 0.0f);
-     // Push eveything 5 units back into the scene, otherwise we won't see the primitive
+
 
 
    
@@ -1065,17 +1108,13 @@ glScalef(10.0,10.0,10.0);
      glPopMatrix();
 
 glPopMatrix();
-
+      //**************** END OF WILDCAT ********************
 	 //**************Dragon Fly*****************
 	glPushMatrix();
 	dragonfly.render();
 	glPopMatrix();
 
-
-
-
-
-      //**************** END OF WILDCAT ********************
+	 //**************Fog*****************
 	 glEnable(GL_FOG);// Enables GL_FOG
 
 	if (fog)
@@ -1132,7 +1171,7 @@ glPopMatrix();
 	glColor3f(0.0,1.0,0.498039);
 	glTranslatef(10.0,0.0,10.0);
 	glRotatef(-180.0,0.0,1.0,1.0);
-	gluDisk(quadratic5,0.0,900.0,900.0,500.0);
+	gluDisk(quadratic5,0.0,900.0,900.0,500.0); // Ground!
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 
@@ -2262,13 +2301,6 @@ glPopMatrix();
 	
 
 
-void display(){
-	//gluLookAt(0.0f, 100.0f,-100.0f, 0.0f, 100.0f, 0.0f, 0.0f, 1000.0f, 0.0f);
-	cam.setTarget(dragonfly.getLocation());
-	renderSpheres();
-	//renderScene();
-}
-
     void reshape (int width, int height) {
     glViewport(0, 0, (GLsizei)width, (GLsizei)height); // Set our viewport to the size of our window
     glMatrixMode(GL_PROJECTION); // Switch to the projection matrix so that we can manipulate how our scene is viewed
@@ -2287,8 +2319,10 @@ void display(){
 	void idle(void){
 		// update bug
 		dragonfly.animate();
-		//Vec3f tempV= (dragonfly.getLocation() - Vec3f(cam.targetX(),cam.targetY(),cam.targetZ()));
-		cam.setLocation(dragonfly.getLocation() - Vec3f(100,100,100));
+		cam.update();
+
+		// update camera?
+		cam.setTarget(dragonfly.getLocation());
 
 		Vec3f d_loc = dragonfly.getLocation();
 		int temp = musicPlaying;
@@ -2298,14 +2332,16 @@ void display(){
 			musicPlaying = 1;
 		} else if(isInRange(worldPLX,worldPLY,worldPLZ,worldRadius,d_loc[0],d_loc[1],d_loc[2]))
 		{
-			musicPlaying = 1;
+			musicPlaying = 2;
 		} else if(isInRange(worldWCX,worldWCY,worldWCZ,worldRadius,d_loc[0],d_loc[1],d_loc[2]))
 		{
-			musicPlaying = 1;
+			musicPlaying = 3;
+		} else{
+			musicPlaying = 0;
 		}
 
 		// choose music
-		if (temp != musicPlaying)
+		/*if (temp != musicPlaying)
 			switch(musicPlaying){
 			   case '0':
 				   engine->stopAllSounds();
@@ -2324,10 +2360,11 @@ void display(){
 				   engine->play2D("Wildcat.ogg", true);
 				   break;
 			 
-			}
+			}*/
 			// update spheres
 			// call display //
-		display();
+		
+	display();
 	}
    
    
@@ -2337,22 +2374,18 @@ void display(){
     glutInitDisplayMode (GLUT_DEPTH |GLUT_DOUBLE | GLUT_RGBA); // Set up a basic display buffer (only single buffered for now)
     glutInitWindowSize (500, 500); // Set the width and height of the window
     glutInitWindowPosition (100, 100); // Set the position of the window
-    glutCreateWindow ("testing music "); // Set the title for the window
-    texture = LoadTextureRAW( "space.bmp", TRUE ); // call diamonds file
-	tex_prettyLights = LoadTextureRAW2("prettylightsnight.bmp", TRUE);// calls pretty lights night file
-    tex_wildcat = LoadTextureRAW3("jungle.bmp",TRUE);
+    glutCreateWindow ("Dragonflyght"); // Set the title for the window
+    texture = LoadTextureRAW( "Resources/space.bmp", TRUE ); // call diamonds file
+	tex_prettyLights = LoadTextureRAW2("Resources/prettylightsnight.bmp", TRUE);// calls pretty lights night file
+    tex_wildcat = LoadTextureRAW3("Resources/jungle.bmp",TRUE);
 	glutDisplayFunc(display); // Tell GLUT to use the method "display" for rendering
-
-	 cam = CameraControl();
-	 cam.setLocation(Vec3f(0,100,100));
-
-
+	
     //materials for the scene
-	MoonText = MoonTexture("moon.bmp", TRUE );
-	SkyText = SkyTexture("sky.bmp", TRUE );
-	WoodText = WoodTexture("wood.bmp", TRUE );
-	GrassText = GrassTexture("grass.bmp", TRUE );
-	WaterText = WaterTexture("water.bmp", TRUE );
+	MoonText = MoonTexture("Resources/moon.bmp", TRUE );
+	SkyText = SkyTexture("Resources/sky.bmp", TRUE );
+	WoodText = WoodTexture("Resources/wood.bmp", TRUE );
+	GrassText = GrassTexture("Resources/grass.bmp", TRUE );
+	WaterText = WaterTexture("Resources/water.bmp", TRUE );
 
 	
 	quadratic1 = gluNewQuadric();
@@ -2369,6 +2402,11 @@ void display(){
     glEnable(GL_LIGHTING);
 
 	dragonfly = Dragonfly();//creates dragonfly
+	dragonfly.setLocation(Vec3f(0,10,0));
+	cam = CameraControl();
+	cam.setLocation(Vec3f(0,100,100));
+	cam.setTarget(dragonfly.getLocation());
+
 	//engine->play2D("outside.ogg", true);//plays the outside music
 	glutReshapeFunc(reshape); // Tell GLUT to use the method "reshape" for reshaping
     glutKeyboardFunc(functionKeys);

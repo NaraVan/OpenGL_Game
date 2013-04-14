@@ -7,12 +7,14 @@ CameraControl::CameraControl(void)
 	location = Vec3f(0.0f, 0.0f, 1.0f);
 	targetPoint = Vec3f(0.0f, 0.0f, 0.0f);
 	upDirection = Vec3f(0.0f, 1.0f, 0.0f);
+	setFriction(0.1);
 }
 CameraControl::CameraControl(Vec3f location_, Vec3f targetPoint_, Vec3f upDirection_)
 {
 	location = location_.get(); // get() returns a deep copy
 	targetPoint = targetPoint_.get();
 	upDirection = upDirection_.get();
+	setFriction(0.1);
 }
 
 /*CameraControl::CameraControl(Vec3f location_, Vec3f targetPoint_, float upRotation_)
@@ -86,8 +88,9 @@ void CameraControl::setTarget(Vec3f target_)
 void CameraControl::dolly(float amount) 
 { 
 	// Moves the entire camera rig.
-	location += (targetPoint - location).normalize() * amount;
-	targetPoint += (targetPoint - location).normalize() * amount;
+	//location += (targetPoint - location).normalize() * amount;
+	//targetPoifnt += (targetPoint - location).normalize() * amount;
+	this->addForce((targetPoint - location).normalize() * amount);
 }
 
 void CameraControl::zoom(float amount)
@@ -102,23 +105,30 @@ void CameraControl::zoom(float amount)
 
 void CameraControl::pan(Vec3f panVector_)
 {
-	// moves both the target and the location of the camera along a vector
+	addForce(panVector_);
+	/*// moves both the target and the location of the camera along a vector
 	location += panVector_;
-	targetPoint += panVector_;
+	targetPoint += panVector_; //*/
 }
 
 void CameraControl::circle(Vec3f angles)
 {
+	addOrbitalForce(angles);
 	// Circles the target point. Changes location and upDirection.
 	// targetPoint is the axis of rotation
-	location = location.rotate(targetPoint, angles);
-	upDirection = upDirection.rotate(Vec3f(0,0,0), angles); // Up is a unit vector that rotates around the origin
+	//location = location.rotate(targetPoint, angles);
+	//upDirection = upDirection.rotate(Vec3f(0,0,0), angles); // Up is a unit vector that rotates around the origin
 } 
 
 void CameraControl::rotate(Vec3f angles)
 {
+	addRotationalForce(angles);
 	// location is the axis of rotation
-	targetPoint = targetPoint.rotate(location, angles);
-	upDirection = upDirection.rotate(Vec3f(0,0,0), angles); // Up is a unit vector that rotates around the origin
+	//targetPoint = targetPoint.rotate(location, angles);
+	//upDirection = upDirection.rotate(Vec3f(0,0,0), angles); // Up is a unit vector that rotates around the origin
 } 
 
+void CameraControl::animate() {
+	orbitPoint = targetPoint;
+	update();
+}

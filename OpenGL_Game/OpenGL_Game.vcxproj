@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dragonfly.cpp" />
+    <ClCompile Include="dragonflyTextures.cpp" />
     <ClCompile Include="Files\CameraControl.cpp" />
     <ClCompile Include="Files\DisplayAxies.cpp" />
     <ClCompile Include="Files\imageloader.cpp" />
@@ -26,6 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dragonfly.h" />
+    <ClInclude Include="dragonflyTextures.h" />
     <ClInclude Include="Files\CameraControl.h" />
     <ClInclude Include="Files\DisplayAxies.h" />
     <ClInclude Include="Files\DisplayObject.h" />

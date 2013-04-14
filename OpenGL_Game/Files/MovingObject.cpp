@@ -9,6 +9,8 @@ MovingObject::MovingObject(void)
 	rotation = Vec3f(0,0,0);
 	rotationalVelocity = Vec3f(0,0,0);
 	rotationalAcceleration = Vec3f(0,0,0);
+
+	orbitPoint = Vec3f(0,10,0);
 	
 	movementFriction = Vec3f(0,0,0);
 	rotationFriction = Vec3f(0,0,0);
@@ -46,18 +48,21 @@ Vec3f MovingObject::getOrbitPoint() const {
 }
 
 Vec3f MovingObject::getDirectionFromRotation() const {
+	Vec3f temp = Vec3f();
+	//************** Using Quaternions?
+
+
+	//************** Using normal angles
 	// If rotation is in degrees, and we need -1 to 1 for each axis
 	// The natural direction is 0,0,0 -> 0,0,1
 	// Each angle effects two directions
 	// Xangle -> Y Z
 	// Yangle -> X Z
 	// Zangle -> X Y
-
-	Vec3f temp = Vec3f();
 	temp[0] = sin(rotation[1]/180.0f * 3.14159265359f);//cos(rotation[1]) + sin(rotation[1]) + cos(rotation[2]) - sin(rotation[2]);
 	temp[1] = 0;//sin(rotation[2]) + cos(rotation[2]) + cos(rotation[0]) - sin(rotation[0]);
 	temp[2] = cos(rotation[1]/180.0f * 3.14159265359f);//cos(rotation[0]) + sin(rotation[0]) + cos(rotation[1]) - sin(rotation[1]);
-	std::cout << "[getDirectionFromRotation: "<< rotation << " to " << temp << "] ";
+	//std::cout << "[getDirectionFromRotation: "<< rotation << " to " << temp << "] "; 
 	return temp.normalize();
 }
 
@@ -100,6 +105,7 @@ void MovingObject::setFriction(float f_)
 {
 	movementFriction = Vec3f(abs(f_),abs(f_),abs(f_));
 	rotationFriction = Vec3f(abs(f_),abs(f_),abs(f_));
+	orbitalFriction = Vec3f(abs(f_),abs(f_),abs(f_));
 }
 
 void MovingObject::setMovementFriction(Vec3f v_){
@@ -107,6 +113,9 @@ void MovingObject::setMovementFriction(Vec3f v_){
 }
 void MovingObject::setRotationalFriction(Vec3f v_){
 	rotationFriction = Vec3f(abs(v_[0]),abs(v_[1]),abs(v_[2]));
+}
+void MovingObject::setOrbitalFriction(Vec3f v_){
+	orbitalFriction = Vec3f(abs(v_[0]),abs(v_[1]),abs(v_[2]));
 }
 
 void MovingObject::addForce(Vec3f v_) 
@@ -117,6 +126,12 @@ void MovingObject::addRotationalForce(Vec3f v_)
 {
 	rotationalAcceleration += v_ / mass;
 }
+
+void MovingObject::addOrbitalForce(Vec3f v_)
+{
+	orbitalAcceleration += v_ / mass;
+}
+
 void MovingObject::update(void)
 {
 	// TODO: add orbiting?
@@ -134,8 +149,17 @@ void MovingObject::update(void)
 	rotationalVelocity[0] /= (1.0f + rotationFriction[0]), 
 	rotationalVelocity[1] /= (1.0f + rotationFriction[1]), 
 	rotationalVelocity[2] /= (1.0f + rotationFriction[2]);
+	
+	orbitalVelocity += orbitalAcceleration;
+	orbitalAcceleration *= 0;
+	location = location.rotate(orbitPoint, orbitalVelocity); // orbitalLocation?
+	orbitalVelocity[0] /= (1.0f + orbitalFriction[0]), 
+	orbitalVelocity[1] /= (1.0f + orbitalFriction[1]), 
+	orbitalVelocity[2] /= (1.0f + orbitalFriction[2]);
+	
 	}
 }
+
 
 void MovingObject::stop(void) 
 {
@@ -143,4 +167,18 @@ void MovingObject::stop(void)
 	acceleration *= 0;
 	rotationalVelocity *= 0;
 	rotationalAcceleration *= 0;
+}
+
+
+	// TODO: add rotational and orbital bounces?
+	// Overly simple orbit bounce
+
+void MovingObject::velocityBounce(Vec3f normal) 
+{
+	velocity = velocity - 2 * velocity.dot(normal) * normal;
+}
+
+void MovingObject::orbitBounce(Vec3f normal) 
+{
+	orbitalVelocity = - orbitalVelocity;
 }

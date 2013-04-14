@@ -28,12 +28,14 @@ public:
 	void setRotationalVelocity(Vec3f);
 
 	void setOrbitPoint(Vec3f);
+	void addOrbitalForce(Vec3f);
 
 	void setMass(float m_);
 
 	void setFriction(float f_); //!< sets all friction to the same value
 	void setMovementFriction(Vec3f v_);
 	void setRotationalFriction(Vec3f v_);
+	void setOrbitalFriction(Vec3f v_);
 
 	void addForce(Vec3f);
 	void addRotationalForce(Vec3f);
@@ -41,14 +43,21 @@ public:
 	void stop(); //!< Stops all movement. Makes velocity and rotational velocity = 0;
 	void update(); //!< Changes location and rotation based on accumilated forces
 
+	void velocityBounce(Vec3f normal); //!< bounces object's velocity
+	void orbitBounce(Vec3f normal); //!< Simple, reverses orbit
+
 protected:
 	Vec3f location; //!< Current location
 	Vec3f acceleration; //!< Increase in movement change
-	Vec3f velocity; //!< Movement change
+	Vec3f velocity; //!< Movement speed
 	Vec3f rotation;  //!< Current rotation
-	Vec3f rotationalVelocity; //!< Rotation change
+	Vec3f rotationalVelocity; //!< Rotation speed
 	Vec3f rotationalAcceleration; //!< Increase in rotation change
-	Vec3f orbitPoint; //!< TODO?
+	Vec3f orbitPoint; //!< Point around which the object orbits
+	//Vec3f orbitalLocation; //?
+	Vec3f orbitalVelocity; //!< Orbit speed
+	Vec3f orbitalAcceleration; //!< Orbit speed change
+	Vec3f orbitalFriction; //!< Resistance to orbit movement in 3d;
 	Vec3f movementFriction; //!< Resistance to movement change in 3d
 	Vec3f rotationFriction; //!< Resistance to rotation change in 3d
 	float mass; //!< Larger mass reduces the effect of certain kinds of forces due to inertia.
