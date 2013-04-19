@@ -1,5 +1,9 @@
 #pragma once
 #include <gl\glut.h>
+#ifdef TARGET_OS_MAC
+	// Mac Includes Here
+	#include <GlUT/glut.h>
+#endif
 
 /******************
  * This is a class that tries to keep texture calls together, it probably could be static or done entirely differently

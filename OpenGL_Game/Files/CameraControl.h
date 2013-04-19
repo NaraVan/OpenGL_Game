@@ -18,7 +18,6 @@ private:
 public:
 	CameraControl(void);
 	CameraControl(Vec3f location_, Vec3f targetPoint_, Vec3f upDirection_);
-	//CameraControl(Vec3f location_, Vec3f targetPoint_, float upRotation_);
 	~CameraControl(void);
 	
 	// Accessor methods

@@ -1,5 +1,9 @@
 #pragma once
 #include <gl\glut.h>
+#ifdef TARGET_OS_MAC
+// Mac Includes Here
+#include <GlUT/glut.h>
+#endif
 #include "Files\MovingObject.h"
 
 class Wing: public MovingObject

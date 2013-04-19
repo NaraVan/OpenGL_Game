@@ -16,7 +16,7 @@ Dragonfly::Dragonfly(void)
 	frontWing = Wing();
 	backWing = Wing();
 
-	setFriction(0.1);
+	setFriction(0.3);
 
 	tex = dragonflyTextures();
 
@@ -159,6 +159,20 @@ void Dragonfly::render(){
 	glPopMatrix();//1
 }
 
+
+float Dragonfly::getSpeed(){return speed;}
+void Dragonfly::increaseSpeed(float s){ 
+	if (s + speed > maxSpeed){
+		speed = maxSpeed;
+		return;
+	} else if (s + speed <= 0.01){
+		speed = 0;
+		return;
+	}
+	speed += s;
+}
+void Dragonfly::setMaxSpeed(float s){ maxSpeed = s;}
+
 void Dragonfly::move(float amount) 
 {
 
@@ -187,7 +201,7 @@ void Dragonfly::animate()
 {
 	frontWing.animate();
 	backWing.animate();
-	addForce(getDirectionFromRotation() * speed/maxSpeed);
+	//addForce(getDirectionFromRotation() * speed/maxSpeed);
 	update();
 }
 

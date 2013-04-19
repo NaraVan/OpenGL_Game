@@ -1,5 +1,9 @@
 #pragma once
 #include <gl\glut.h>
+#ifdef TARGET_OS_MAC
+	// Mac Includes Here
+	#include <GlUT/glut.h>
+#endif
 #include "files\MovingObject.h"
 #include "Files\objxload.h"
 #include "Wing.h"
@@ -33,12 +37,16 @@ private:
 public:
 	Dragonfly(void);
 	~Dragonfly(void);
-	void render();
-	
+
+	void render(void);
+
+	float getSpeed(void);
+	void increaseSpeed(float);
+	void setMaxSpeed(float);
 	void move(float amount); // moves forwards/backwards along vector created from current rotation
 	void changeAltitude(float);
 	void turn(Vec3f direction);
-	void animate();
+	void animate(void);
 	
 	bool withinRangeOfContact(Vec3f); // Checks if the point is within the rough area of the object
 	bool contactsWings(Vec3f); // TODO Checks if a point is within the wing flapping area

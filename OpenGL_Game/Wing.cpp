@@ -8,7 +8,7 @@ Wing::Wing(void)
 	lengthRatio = 0.6;
 	widthRatio = 0.3;
 	flapSpeed = 24;
-	maxAngle = 30;
+	maxAngle = 32;
 	startFlapping = true;
 	paused = false;
 	//setFriction(0.05);
@@ -53,17 +53,17 @@ void Wing::animate()
 	if(startFlapping)
 	{
 		startFlapping = false;
-		addRotationalForce( Vec3f(0,0,-2.5) );
+		addRotationalForce( Vec3f(0,0,-flapSpeed/2) );
 	}
 
 	
 	 if (rotation[2] > maxAngle + maxAngle/3.0f)
 	{
-		addRotationalForce( Vec3f(0,0,-5) );
+		addRotationalForce( Vec3f(0,0,-flapSpeed) );
 
 	} else if (rotation[2] < - maxAngle + maxAngle/3.0f)
 	{
-		addRotationalForce( Vec3f(0,0,5) );
+		addRotationalForce( Vec3f(0,0,flapSpeed) );
 	}
 	update();
 }
